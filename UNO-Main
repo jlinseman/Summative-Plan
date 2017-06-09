@@ -2,7 +2,7 @@ class SummativeUNO
 {
   public static void main (String[] args) 
   {
-   String [] deck = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",
+   final String [] strings = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",
                      "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",  
                      "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse", 
                      "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse",
@@ -11,20 +11,21 @@ class SummativeUNO
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Wild Card", "Wild Card", "Wild Card Four", "Wild Card Four"};
-     
+  final int[] ints = new int[strings.length];   
     
    
-     for (int i = 0; i < deck.length(); i++) deck [i] = i;
-     for (int i = 0; i < deck.length(); i++)
+    // for (int i = 0; i < deck.length(); i++) deck [i] = i;
+     for (int i = 0; i < strings.length(); i++)
      {
-       int index = (int)(Math.random() * deck.length);
-       int temp = deck[i];
-       decks[index] = temp;
+       ints[i] = Integer.parseInt(strings[i]);
+       int index = (int)(Math.random() * ints.length);
+       int temp = ints[i];
+       ints[index] = temp;
      }
      
-     for (int i = 0; i < deck.length; i++)
+     for (int i = 0; i < 7; i++)
      {
-   
+      System.out.println( ints[i]);
      }
      
      
@@ -38,5 +39,3 @@ class SummativeUNO
      
    }  
   }
-     
-    
