@@ -11,31 +11,31 @@ class SummativeUNO
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Wild Card", "Wild Card", "Wild Card Four", "Wild Card Four"};
-  final int[] ints = new int[strings.length];   
+    
     
    
-    // for (int i = 0; i < deck.length(); i++) deck [i] = i;
-     for (int i = 0; i < strings.length(); i++)
+     //To shuffle the deck
+     for (int i = 0; i < strings.length; i++)
      {
-       ints[i] = Integer.parseInt(strings[i]);
-       int index = (int)(Math.random() * ints.length);
-       int temp = ints[i];
-       ints[index] = temp;
+       
+       int index1 = (int)(Math.random() * strings.length);
+       String temp1 = strings[i];
+       int index2 = (int)(Math.random() * strings.length);
+       String temp2 = strings[i];
+
+       strings[index1] = temp2;
+       strings[index2] = temp1;
      }
      
-     for (int i = 0; i < 7; i++)
+     //final int[] ints = new int[strings.length]; 
+     //String spacesToMoveLet = strings[i].substring(strings[i].length-1); //Grabs last letter n string
+     //int spaceToMoveNum = Integer.parseInt(spacesToMoveLet); // Makes last letter into an integer
+      
+     for (int i = 1; i <= 7; i++) //1st seven cards of the deck
      {
-      System.out.println( ints[i]);
+
+      System.out.println( "Card "+i+": "+ strings[i-1]);
      }
      
      
      
-     
-     
-     
-     
-     
-     
-     
-   }  
-  }
