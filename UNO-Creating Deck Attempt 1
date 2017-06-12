@@ -2,23 +2,69 @@ class SummativeUNO
 {
   public static void main (String[] args) 
   {
-   int [] deck = new int [100];
-   String [] colours = {"Red", "Blue", "Green", "Yellow"};
-   String [] characters = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "Reverse", "Skip", "Draw Two"};
-   
-   for (int i = 0; i < deck.length; i++) deck [i] = i;
-    for (int i = 0; i < deck.length; i++)
-    {
-      int index = (int)(Math.random() * deck.length);
-      int temp = deck[i];
-      deck[index] = temp;
+    String [] strings = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",
+                     "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",  
+                     "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse", 
+                     "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse",
+                     "Green 1", "Green 2", "Green 3", "Green 4", "Green 5", "Green 6", "Green 7", "Green 8", "Green 9", "Green Draw Two", "Green Skip", "Green Reverse",
+                     "Green 1", "Green 2", "Green 3", "Green 4", "Green 5", "Green 6", "Green 7", "Green 8", "Green 9", "Green Draw Two", "Green Skip", "Green Reverse", 
+                     "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
+                     "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
+                     "Wild Card", "Wild Card", "Wild Card Four", "Wild Card Four"};
+
+     shuffle (strings);
     }
     
-     for (int i = 0; i < deck.length; i++)
+ 
+
+
+ public static void shuffle (String [] strings)
+ { 
+     //To shuffle the deck
+     for (int i = 0; i < strings.length; i++)
      {
-       String colour = colours[Math.round(deck[i] / 25)];
-       String character = characters[Math.round(deck[i] % 25)];
-       System.out.println(colour +""+ character);
+       
+       int index1 = (int)(Math.random() * strings.length);
+       String temp1 = strings[i];
+       int index2 = (int)(Math.random() * strings.length);
+       String temp2 = strings[i];
+
+       strings[index1] = temp2;
+       strings[index2] = temp1;
      }
-    }
-}
+         
+
+
+     //final int[] ints = new int[strings.length]; 
+     //String spacesToMoveLet = strings[i].substring(strings[i].length-1); //Grabs last letter n string
+     //int spaceToMoveNum = Integer.parseInt(spacesToMoveLet); // Makes last letter into an integer
+     
+
+     for (int i = 1; i <= 7; i++) //1st seven cards of the deck
+     {
+      System.out.println( "Card "+i+": "+ strings[i-1]);
+     }
+
+   }  
+  }
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+  
