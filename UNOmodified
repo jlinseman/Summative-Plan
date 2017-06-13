@@ -1,0 +1,90 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class mainClass {
+
+	static // Boolean
+	Boolean nobodyWon = true;
+
+	static // Character Info
+	String playerName;
+	static int playerDeckAmount = 7;
+	static String[] playerDeck = new String[playerDeckAmount];
+
+	static // Computer Info
+	String computerName = "Bob";
+	int computerDeckAmount = 7;
+	String[] computerDeck = new String[computerDeckAmount];
+
+	// Scanner method used to obtain info from user
+	static Scanner input = new Scanner(System.in);
+	
+	static Random rand = new Random() ; 
+
+	// Array that holds all card options
+	static String[] strings = { "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9",
+			"Red Draw Two", "Red Skip", "Red Reverse", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7",
+			"Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse", "Blue 1", "Blue 2", "Blue 3", "Blue 4",
+			"Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse", "Blue 1",
+			"Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two",
+			"Blue Skip", "Blue Reverse", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5", "Green 6", "Green 7",
+			"Green 8", "Green 9", "Green Draw Two", "Green Skip", "Green Reverse", "Green 1", "Green 2", "Green 3",
+			"Green 4", "Green 5", "Green 6", "Green 7", "Green 8", "Green 9", "Green Draw Two", "Green Skip",
+			"Green Reverse", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7",
+			"Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse", "Yellow 1", "Yellow 2",
+			"Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two",
+			"Yellow Skip", "Yellow Reverse", "Wild Card", "Wild Card", "Wild Card Four", "Wild Card Four" };
+
+	// Main Method
+	public static void main(String args[]) {
+
+		do {
+			//Calls method to introduce the program to the user
+			introduceProgramToUser();
+			
+			//Gives both users a randomly generated hand 
+			randomizeDecks() ; 
+			
+
+		} while (nobodyWon);
+
+	}
+	public static void randomizeDecks() {
+		
+		//Randomize the player deck 
+		for(int i = 0; i < playerDeck.length - 1; i++) {
+			int randomCardIndex = rand.nextInt(99) + 1; 
+			playerDeck[i] = strings[randomCardIndex] ; 
+		}
+		for(int i = 0; i <= playerDeck.length - 1; i++) {
+			System.out.println(playerDeck[i]); 
+		}
+		
+		
+		
+		
+		//Randomize the computer deck
+	}
+
+	public static void introduceProgramToUser() {
+		//This part introduces the program and allows for the character to enter their name; 
+		System.out.println("\t\tWELCOME TO UNO!");
+		System.out.println();
+		System.out.print("Name: ");
+		playerName = input.next();
+
+		
+		//This section introduces the opponent
+		clearScreen() ; 
+		System.out.println("You will be versing: " + computerName);
+		System.out.println("---------------------------------");
+		
+	}
+	
+	public static void clearScreen() {
+		for(int x = 0; x <= 20; x++) {
+			System.out.println();
+		}
+	}
+
+}
