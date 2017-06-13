@@ -1,8 +1,10 @@
+import java.util.Random;
+
 class SummativeUNO
 {
-  public static void main (String[] args) 
-  {
-   final String [] strings = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",
+  
+ //Cards  
+ public static String [] strings = {"Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",
                      "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9", "Red Draw Two", "Red Skip", "Red Reverse",  
                      "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse", 
                      "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", "Blue 6", "Blue 7", "Blue 8", "Blue 9", "Blue Draw Two", "Blue Skip", "Blue Reverse",
@@ -11,31 +13,56 @@ class SummativeUNO
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5", "Yellow 6", "Yellow 7", "Yellow 8", "Yellow 9", "Yellow Draw Two", "Yellow Skip", "Yellow Reverse",
                      "Wild Card", "Wild Card", "Wild Card Four", "Wild Card Four"};
-    
-    
+  
+
+ 
+  public static void main (String[] args) 
+  {
+   String playerName;
+   int deckLength = 7;
    
-     //To shuffle the deck
-     for (int i = 0; i < strings.length; i++)
-     {
-       
-       int index1 = (int)(Math.random() * strings.length);
-       String temp1 = strings[i];
-       int index2 = (int)(Math.random() * strings.length);
-       String temp2 = strings[i];
-
-       strings[index1] = temp2;
-       strings[index2] = temp1;
-     }
-     
-     //final int[] ints = new int[strings.length]; 
-     //String spacesToMoveLet = strings[i].substring(strings[i].length-1); //Grabs last letter n string
-     //int spaceToMoveNum = Integer.parseInt(spacesToMoveLet); // Makes last letter into an integer
+   String playerDeck[] = new String[deckLength]; 
+   System.out.println(" Enter player name : ");
+   playerName = In.getString();
+   
+    
+    
+    
+     displayScreen() ;
+    
+  }
+  
+  public static String getCard(String[] strings)
+  {
+     //Random Variable 
+    Random randomCard = new Random();
+    
+     int rand = randomCard.nextInt((108 - 1) + 1) + 1;
+     System.out.println(strings[rand]);
+     return strings[rand] ; 
+  }
+  
+  // Game Display
+  public static void displayScreen()
+  {
+    System.out.println("--------------------------------------------------");
+    
+    System.out.println("\t\tRED 7");
+    
+   System.out.println("--------------------------------------------------");
+    
+    
+    System.out.println(" Computer Hand: ");
+    System.out.println(playerName + " Hand: ");
       
-     for (int i = 1; i <= 7; i++) //1st seven cards of the deck
-     {
+     for (int i = 1; i <= 7; i++)
+    {
+      System.out.println(i+": "+ strings[i-1]); //Remember to go through the player deck
+    }
+  
+  }
 
-      System.out.println( "Card "+i+": "+ strings[i-1]);
-     }
-     
-     
-     
+}
+    
+    
+    
