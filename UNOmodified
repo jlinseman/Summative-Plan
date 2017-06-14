@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class mainClass {
 
+	static String discardPile = null ; 
+	static int cardChoice = 0 ; 
+	
 	static // Boolean
 	Boolean nobodyWon = true;
 
@@ -13,13 +16,13 @@ public class mainClass {
 
 	static // Computer Info
 	String computerName = "Bob";
-	int computerDeckAmount = 7;
-	String[] computerDeck = new String[computerDeckAmount];
+	static int computerDeckAmount = 7;
+	static String[] computerDeck = new String[computerDeckAmount];
 
 	// Scanner method used to obtain info from user
 	static Scanner input = new Scanner(System.in);
-	
-	static Random rand = new Random() ; 
+
+	static Random rand = new Random();
 
 	// Array that holds all card options
 	static String[] strings = { "Red 1", "Red 2", "Red 3", "Red 4", "Red 5", "Red 6", "Red 7", "Red 8", "Red 9",
@@ -39,52 +42,154 @@ public class mainClass {
 	public static void main(String args[]) {
 
 		do {
-			//Calls method to introduce the program to the user
+			// Calls method to introduce the program to the user
 			introduceProgramToUser();
-			
-			//Gives both users a randomly generated hand 
-			randomizeDecks() ; 
-			
+
+			// Gives both users a randomly generated hand
+
+			randomizeDecks();
+			runGame();
 
 		} while (nobodyWon);
 
 	}
+
 	public static void randomizeDecks() {
-		
-		//Randomize the player deck 
-		for(int i = 0; i < playerDeck.length - 1; i++) {
-			int randomCardIndex = rand.nextInt(99) + 1; 
-			playerDeck[i] = strings[randomCardIndex] ; 
+
+		// Randomize the player deck
+		for (int i = 0; i < playerDeck.length; i++) {
+
+			playerDeck[i] = strings[getRandomNumber(99)];
 		}
-		for(int i = 0; i <= playerDeck.length - 1; i++) {
-			System.out.println(playerDeck[i]); 
+
+		// Randomize the computer deck
+		for (int i = 0; i < computerDeck.length; i++) {
+
+			computerDeck[i] = strings[getRandomNumber(99)];
 		}
 		
 		
-		
-		
-		//Randomize the computer deck
+
+		discardPile = strings[getRandomNumber(99)];
+			
+
+	}
+
+	public static int getRandomNumber(int x) {
+		return rand.nextInt(x);
 	}
 
 	public static void introduceProgramToUser() {
-		//This part introduces the program and allows for the character to enter their name; 
+		// This part introduces the program and allows for the character to
+		// enter their name;
 		System.out.println("\t\tWELCOME TO UNO!");
 		System.out.println();
 		System.out.print("Name: ");
 		playerName = input.next();
 
+		// This section introduces the opponent
+		clearScreen();
+
+	}
+
+	public static void clearScreen() {
+		for (int x = 0; x <= 20; x++) {
+			System.out.println();
+		}
+
+	}
+
+	public static void runGame() {
 		
-		//This section introduces the opponent
-		clearScreen() ; 
-		System.out.println("You will be versing: " + computerName);
-		System.out.println("---------------------------------");
+		
+		do {
+			clearScreen() ; 
+			playerTurn() ;
+			clearScreen() ; 
+			computerTurn() ; 
+			
+		}while(playerDeckAmount > 0 && computerDeckAmount > 0) ; 
+	
 		
 	}
 	
-	public static void clearScreen() {
-		for(int x = 0; x <= 20; x++) {
-			System.out.println();
+	public static void computerTurn() {
+		String computerChoice = computerDeck[getRandomNumber(6)] ; 
+		
+		
+		System.out.println("\tBob's TURN");
+		System.out.println();
+		System.out.println("Discard PILE: " + discardPile);
+		System.out.println();
+		System.out.println("Bob's DECK");
+		for (int i = 1; i <= 7; i++) {
+			// Remember to go through the player deck
+			System.out.println(i + ": " + computerDeck[i - 1]);
+		}
+		System.out.println();
+		System.out.print("Bob's choice: ");
+		slowText(computerChoice) ; 
+		
+		//Validate Computer Choice 
+		discardPile = computerChoice ; 
+		
+	}
+	
+	public static void slowText(String computerChoice) {
+		
+		for(int i = 0; i < computerChoice.length(); i++) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			System.out.print(computerChoice.charAt(i) ) ;
+			
+		}
+	}
+	
+	public static void playerTurn() {
+		
+		
+		
+		System.out.println("\tYOUR TURN");
+		System.out.println();
+		System.out.println("Discard PILE: " + discardPile);
+		System.out.println();
+		System.out.println("YOUR DECK");
+		
+		if(notFirstRound) {
+			for (int i = 1; i <= playerDeckAmount; i++) {
+				// Remember to go through the player deck
+				System.out.println(i + ": " + playerDeck[i - 1]);
+			}
+		} else {
+			for (int i = 1; i <= playerDeckAmount; i++) {
+				// Remember to go through the player deck
+				System.out.println(i + ": " + newPlayerDeck[i - 1]);
+			}
+		}
+		
+		System.out.println();
+		System.out.print("Pick a choice: " );
+		cardChoice = input.nextInt() ; 
+		
+		//Validate Player Choice 
+		if(cardChoice > playerDeckAmount) {
+			clearScreen() ; 
+			slowText("INVALID CHOICE") ;
+			clearScreen() ; 
+			playerTurn() ; 
+		}
+		
+		discardPile = playerDeck[cardChoice - 1] ;
+		playerDeckAmount-- ; 
+		String[] newPlayerDeck = new String[playerDeckAmount];
+		for(int i = 0; i < playerDeckAmount; i++) {
+			newPlayerDeck[i] = playerDeck[i] ; 
 		}
 	}
 
 }
+
