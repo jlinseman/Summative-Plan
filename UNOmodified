@@ -49,11 +49,24 @@ public class mainClass {
 			introduceProgramToUser();
 
 			// Gives both users a randomly generated hand
-
 			randomizeDecks();
+
 			runGame();
 
 		} while (nobodyWon);
+
+	}
+
+	public static void introduceProgramToUser() {
+		// This part introduces the program and allows for the character to
+		// enter their name;
+		System.out.println("\t\tWELCOME TO UNO!");
+		System.out.println();
+		System.out.print("Name: ");
+		playerName = input.next();
+
+		// This section introduces the opponent
+		clearScreen();
 
 	}
 
@@ -75,40 +88,101 @@ public class mainClass {
 
 	}
 
-	public static int getRandomNumber(int x) {
-		return rand.nextInt(x);
-	}
-
-	public static void introduceProgramToUser() {
-		// This part introduces the program and allows for the character to
-		// enter their name;
-		System.out.println("\t\tWELCOME TO UNO!");
-		System.out.println();
-		System.out.print("Name: ");
-		playerName = input.next();
-
-		// This section introduces the opponent
-		clearScreen();
-
-	}
-
-	public static void clearScreen() {
-		for (int x = 0; x <= 20; x++) {
-			System.out.println();
-		}
-
-	}
-
 	public static void runGame() {
 
 		do {
 			discardPileCardNumber = Character.getNumericValue(discardPile.charAt(discardPile.length() - 1));
 			clearScreen();
+			checkWhoWon() ; 
 			playerTurn();
+			checkWhoWon() ; 
 			clearScreen();
+			checkWhoWon() ; 
 			computerTurn();
 
 		} while (playerDeckAmount > 0 && computerDeckAmount > 0);
+		checkWhoWon() ; 
+	}
+	
+	public static void checkWhoWon() {
+		if(playerDeckAmount == 0) {
+			System.out.println(playerName + " WON!");
+		}
+		if(computerDeckAmount == 0) {
+			System.out.println(computerName + " WON!");
+		}
+
+	}
+
+	public static void playerTurn() {
+
+		// Display Screen
+		System.out.println("\tYOUR TURN");
+		System.out.println();
+		System.out.println("Discard PILE: " + discardPile);
+		System.out.println();
+		System.out.println("YOUR DECK");
+
+		// Prints out the players deck
+		for (int i = 1; i <= playerDeckAmount; i++) {
+			System.out.println(i + ": " + playerDeck[i - 1]);
+		}
+		System.out.println();
+		System.out.println("0: PICK UP A CARD ");
+
+		System.out.println();
+		System.out.print("Pick a choice: ");
+		cardChoice = input.nextInt();
+
+		// Remember to validate the players choice
+	
+		
+	
+		if (cardChoice == 0) {
+
+			playerDeck = Arrays.copyOf(playerDeck, playerDeck.length + 1);
+			playerDeck[playerDeckAmount] = strings[getRandomNumber(99)];
+			playerDeckAmount++;
+			
+			computerTurn();
+			playerTurn() ; 
+
+		}
+		System.out.println();
+		String card = playerDeck[cardChoice - 1] ;
+		int cardIndex = card.length() -1 ; 
+		int cardNum = Character.getNumericValue(card.charAt(cardIndex)); 
+		
+		
+		// They pick A WILD CARD
+		if (playerDeck[cardChoice - 1].charAt(0) == 'W') {
+			clearScreen();
+			discardPile = playerDeck[cardChoice - 1];
+			// Switches the last card option with current card choice
+			playerDeck[cardChoice - 1] = playerDeck[playerDeckAmount - 1];
+			playerDeck = Arrays.copyOf(playerDeck, playerDeck.length - 1);
+			playerDeckAmount--;
+			System.out.println("\tWILD CARD!");
+			slowText("Pick a new card!");
+			clearScreen();
+			playerTurn() ; 
+		}
+
+		if (playerDeck[cardChoice - 1].charAt(0) == discardPile.charAt(0) || cardNum == discardPileCardNumber) {
+			// Changes the discard Pile
+			discardPile = playerDeck[cardChoice - 1];
+			// Switches the last card option with current card choice
+			playerDeck[cardChoice - 1] = playerDeck[playerDeckAmount - 1];
+			playerDeck = Arrays.copyOf(playerDeck, playerDeck.length - 1);
+			playerDeckAmount--;
+
+		} else {
+			clearScreen() ; 
+			slowText("Cant choose that") ; 
+			playerTurn() ; 
+		}
+
+		
 
 	}
 
@@ -117,22 +191,27 @@ public class mainClass {
 		String computerChoice = computerDeck[cc];
 
 		int x = 0;
-		x = 0; 
-	
+		x = 0;
 
 		System.out.println("\tBob's TURN");
 		System.out.println();
 		System.out.println("Discard PILE: " + discardPile);
 		System.out.println();
 		System.out.println("Bob's DECK");
+
+		// Loops through the computer deck to check if he needs to pick up a
+		// card
 		for (int i = 1; i <= computerDeck.length; i++) {
-			if (computerDeck[i - 1].charAt(0) == discardPile.charAt(0)) {
+
+			if (computerDeck[i - 1].charAt(0) == discardPile.charAt(0) || computerDeck[i - 1].charAt(0) == 'W') {
 				x++;
 			}
 
 			System.out.println(i + ": " + computerDeck[i - 1]);
 		}
 
+		// If 0 Then X never got incremented which means the computer can't play
+		// a card!
 		if (x == 0) {
 			clearScreen();
 			slowText("BOB TAKES A CARD");
@@ -145,17 +224,34 @@ public class mainClass {
 			playerTurn();
 		}
 
-		for (int i = 1; i <= computerDeck.length; i++) {
-			if (computerDeck[i - 1].charAt(0) == discardPile.charAt(0)) {
-				computerChoice = computerDeck[i - 1];
+		// Otherwise he does have a card so he chooses his card
+		else {
+			for (int i = 1; i <= computerDeck.length; i++) {
+				if (computerDeck[i - 1].charAt(0) == discardPile.charAt(0) || computerDeck[i - 1].charAt(0) == 'W') {
+					computerChoice = computerDeck[i - 1];
+				}
+
 			}
 
+			if (computerChoice.charAt(0) == 'W') {
+				System.out.println("\tWILD CARD");
+				slowText("Bob picks another card");
+
+				for (int i = 0; i < computerDeckAmount; i++) {
+					if (computerDeck[i].charAt(0) != 'W') {
+						computerChoice = computerDeck[i];
+						break;
+					}
+				}
+			}
 		}
 
+		// Displays the choice of the computer
 		System.out.println();
 		System.out.print("Bob's choice: ");
 		slowText(computerChoice);
 
+		// Takes the choice out of the array and creates a new array
 		computerDeck[cc] = computerDeck[computerDeckAmount - 1];
 		computerDeckAmount--;
 		computerDeck = Arrays.copyOf(computerDeck, computerDeck.length - 1);
@@ -165,11 +261,22 @@ public class mainClass {
 		x = 0;
 	}
 
+	public static int getRandomNumber(int x) {
+		return rand.nextInt(x);
+	}
+
+	public static void clearScreen() {
+		for (int x = 0; x <= 20; x++) {
+			System.out.println();
+		}
+
+	}
+
 	public static void slowText(String computerChoice) {
 
 		for (int i = 0; i < computerChoice.length(); i++) {
 			try {
-				Thread.sleep(500);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();
@@ -179,70 +286,7 @@ public class mainClass {
 		}
 	}
 
-	public static void playerTurn() {
-		int y = 0;
-		for (int i = 0; i < playerDeck.length; i++) {
-			if (playerDeck[i].charAt(0) == discardPile.charAt(0)) {
-				y++;
-			}
-
-		}
-		if (y == 0) {
-			clearScreen();
-			slowText("YOU TAKE A CARD");
-
-			playerDeck = Arrays.copyOf(playerDeck, playerDeck.length + 1);
-			playerDeck[playerDeckAmount] = strings[getRandomNumber(99)];
-			playerDeckAmount++;
-			y = 0;
-			computerTurn();
-		}
-
-		System.out.println("\tYOUR TURN");
-		System.out.println();
-		System.out.println("Discard PILE: " + discardPile);
-		System.out.println();
-		System.out.println("YOUR DECK");
-
-		for (int i = 1; i <= playerDeckAmount; i++) {
-			// Remember to go through the player deck
-			System.out.println(i + ": " + playerDeck[i - 1]);
-		}
-
-		System.out.println();
-		System.out.print("Pick a choice: ");
-		cardChoice = input.nextInt() ; 
-
-		// Validate Player Choice
-		if (cardChoice > playerDeckAmount) {
-			clearScreen();
-			slowText("INVALID CHOICE");
-			clearScreen();
-			playerTurn();
-		}
-
-		int newLastIndex = playerDeck[cardChoice - 1].length() - 1;
-		int newCardNumber = Character.getNumericValue(playerDeck[cardChoice - 1].charAt(newLastIndex));
-
-		int lastIndex = playerDeck[cardChoice - 1].length() - 1;
-		int cardNumber = Character.getNumericValue(playerDeck[cardChoice - 1].charAt(lastIndex));
-
-		if (playerDeck[cardChoice - 1].charAt(0) == discardPile.charAt(0) || playerDeck[cardChoice - 1].charAt(0) == 'W'
-				|| cardNumber == discardPileCardNumber) {
-			discardPile = playerDeck[cardChoice - 1];
-			playerDeck[cardChoice - 1] = playerDeck[playerDeckAmount - 1];
-			playerDeck = Arrays.copyOf(playerDeck, playerDeck.length - 1);
-
-			playerDeckAmount--;
-
-		} else {
-			y = 0;
-			clearScreen();
-			slowText("CAH");
-			playerTurn();
-		}
-
-	}
 }
+
 
 
